@@ -1,0 +1,7 @@
+{
+  "name": "HandSketch+",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
