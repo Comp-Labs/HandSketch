@@ -1,0 +1,6 @@
+{
+	"appId": "com.complabs.handsketchplus",
+	"appName": "HandSketch+",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

@@ -10,7 +10,7 @@ const Home: React.FC = () => {
             <IonTitle size="large">HandSketch+</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <iframe src="https://excalidraw.com" title="HandSketch+" width="100%" height="100%"></iframe>
+        <iframe src="https://excalidraw.com" title="HandSketch+" width="100%" height="100%" allow="autoplay; oversized-images; encrypted-media" allowFullScreen></iframe>
       </IonContent>
     </IonPage>
   );
