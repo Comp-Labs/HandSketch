@@ -8,8 +8,6 @@ import {
   exportToSvg,
   exportToBlob
 } from "@excalidraw/excalidraw";
-import InitialData from "../components/initialData";
-import initialData from "../components/initialData";
 import type { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
 import {
   AppState,
@@ -155,7 +153,7 @@ export default function HandSketch() {
             Switch to Dark Theme
           </label>
         </div> */}
-        <div className="export-wrapper button-wrapper">
+        {/* <div className="export-wrapper button-wrapper">
           <label className="export-wrapper__checkbox">
             <input
               type="checkbox"
@@ -226,7 +224,7 @@ export default function HandSketch() {
           <div className="export export-canvas">
             <img src={canvasUrl!} alt="" />
           </div>
-        </div>
+        </div> */}
         <IonFooter translucent={true}>
           <IonToolbar>
             <IonCheckbox checked={zenModeEnabled} onChange={() => setZenModeEnabled(!zenModeEnabled)} labelPlacement="end">Zen Mode</IonCheckbox>
