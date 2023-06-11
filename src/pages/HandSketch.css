@@ -1,0 +1,49 @@
+.button-wrapper button {
+    z-index: 1;
+    height: 40px;
+    max-width: 200px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.excalidraw {
+    --color-primary: #076af7;
+    --color-primary-darker: #4288f5;
+    --color-primary-darkest: #8bb1f9;
+    --color-primary-light: #a7c6fb;
+    --color-primary-contrast-offset: #0657d9;
+}
+
+.excalidraw.theme--dark {
+    --color-primary: #076af7;
+    --color-primary-darker: #4288f5;
+    --color-primary-darkest: #8bb1f9;
+    --color-primary-light: #a7c6fb;
+    --color-primary-contrast-offset: #b3d2ff;
+}
+
+.excalidraw .App-menu_top .buttonList {
+    display: flex;
+}
+
+.excalidraw-wrapper {
+    height: 600px;
+}
+
+:root[dir="ltr"] .excalidraw .layer-ui__wrapper .zen-mode-transition.App-menu_bottom--transition-left {
+    transform: none
+}
+
+.excalidraw .panelColumn {
+    text-align: left;
+}
+
+.export-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+
+    &__checkbox {
+        display: flex;
+    }
+}

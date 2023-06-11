@@ -1,7 +1,7 @@
 {
-  "name": "HandSketch+",
+  "name": "HandSketch",
   "integrations": {
     "capacitor": {}
   },
-  "type": "react"
+  "type": "react-vite"
 }

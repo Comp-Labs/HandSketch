@@ -1,6 +1,8 @@
 {
-	"appId": "com.complabs.handsketchplus",
-	"appName": "HandSketch+",
-	"webDir": "build",
-	"bundledWebRuntime": false
+	"appId": "io.techfiddle.handsketch",
+	"appName": "HandSketch",
+	"webDir": "dist",
+	"server": {
+		"androidScheme": "https"
+	}
 }
