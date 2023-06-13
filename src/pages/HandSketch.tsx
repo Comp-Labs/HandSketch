@@ -1,13 +1,6 @@
 import * as React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFooter, IonCheckbox, IonToggle } from '@ionic/react';
-import {
-  Excalidraw,
-  WelcomeScreen,
-  MainMenu,
-  exportToCanvas,
-  exportToSvg,
-  exportToBlob
-} from "@excalidraw/excalidraw";
+import { Excalidraw, WelcomeScreen, MainMenu, exportToCanvas, exportToSvg, exportToBlob } from "@excalidraw/excalidraw";
 import type { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
 import {
   AppState,
@@ -70,25 +63,34 @@ export default function HandSketch() {
             <MainMenu>
               <MainMenu.Group title="Canvas Options">
                 <MainMenu.DefaultItems.Export />
+                <MainMenu.DefaultItems.SaveAsImage />
                 <MainMenu.DefaultItems.ClearCanvas />
-                <MainMenu.Item onSelect={() => setViewModeEnabled(!viewModeEnabled)}>
+                <MainMenu.Item icon={<i className="fa-solid fa-eye" />} onSelect={() => setViewModeEnabled(!viewModeEnabled)}>
                   View Mode
                 </MainMenu.Item>
-                <MainMenu.Item onSelect={() => setZenModeEnabled(!zenModeEnabled)}>
+                {/* <MainMenu.Item icon={<i className="fa-solid fa-peace" />} onSelect={() => setZenModeEnabled(!zenModeEnabled)}>
                   Zen Mode
-                </MainMenu.Item>
-                <MainMenu.Item onSelect={() => setGridModeEnabled(!gridModeEnabled)}>
+                </MainMenu.Item> */}
+                <MainMenu.Item icon={<i className="fa-solid fa-table-cells-large" />} onSelect={() => setGridModeEnabled(!gridModeEnabled)}>
                   Grid Mode
                 </MainMenu.Item>
                 <MainMenu.DefaultItems.ChangeCanvasBackground />
               </MainMenu.Group>
               <MainMenu.Group title="Tech Fiddle Links">
-                <MainMenu.DefaultItems.Socials />
-                <MainMenu.ItemLink href="https://google.com">
-                  Icon {" "} Google
+                <MainMenu.ItemLink icon={<i className="fa-brands fa-github" />} href="https://github.com/Comp-Labs">
+                  GitHub
                 </MainMenu.ItemLink>
-                <MainMenu.ItemLink href="https://excalidraw.com">
-                  Icon {" "} Excalidraw
+                <MainMenu.ItemLink icon={<i className="fa-solid fa-globe" />} href="https://techfiddle.io">
+                  Website
+                </MainMenu.ItemLink>
+                <MainMenu.ItemLink icon={<i className="fa-brands fa-youtube" />} href="https://youtube.com/@techfiddle">
+                  YouTube
+                </MainMenu.ItemLink>
+                <MainMenu.ItemLink icon={<i className="fa-brands fa-discord" />} href="https://discord.gg/GAbzAGKccW">
+                  Discord
+                </MainMenu.ItemLink>
+                <MainMenu.ItemLink icon={<i className="fa-solid fa-box" />} href="https://bento.me/techfiddle">
+                  Bento
                 </MainMenu.ItemLink>
               </MainMenu.Group>
             </MainMenu>
@@ -225,11 +227,11 @@ export default function HandSketch() {
             <img src={canvasUrl!} alt="" />
           </div>
         </div> */}
-        <IonFooter translucent={true}>
+        {/* <IonFooter translucent={true}>
           <IonToolbar>
             <IonCheckbox checked={zenModeEnabled} onChange={() => setZenModeEnabled(!zenModeEnabled)} labelPlacement="end">Zen Mode</IonCheckbox>
           </IonToolbar>
-        </IonFooter>
+        </IonFooter> */}
       </IonContent>
     </IonPage>
   );

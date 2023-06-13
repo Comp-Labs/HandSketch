@@ -1,42 +1,20 @@
 import * as React from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonAlert, IonFooter, IonCheckbox, IonToggle, IonActionSheet, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButtons, IonButton, IonItem, IonInput, useIonModal, IonSegmentButton, IonSegment } from '@ionic/react';
+import { Excalidraw, WelcomeScreen, MainMenu, exportToCanvas, exportToSvg, exportToBlob } from "@excalidraw/excalidraw";
+import type { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
 import {
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonChip, IonActionSheet, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButtons, IonButton, IonItem, IonInput, useIonModal,
-} from '@ionic/react';
-import { camera, trash, close, add } from 'ionicons/icons';
-import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';
+  AppState,
+  ExcalidrawImperativeAPI,
+  ExcalidrawProps
+} from "@excalidraw/excalidraw/types/types";
+import { add, search, cog, settingsOutline, settings } from 'ionicons/icons';
+import HandSketch from '../components/HandSketch';
 import './Home.css';
 
-const ExcalidrawModal = ({
-  onDismiss,
-}: {
-  onDismiss: (data?: string | null | undefined | number, role?: string) => void;
-}) => {
-  const inputRef = React.useRef<HTMLIonInputElement>(null);
-  return (
-    <IonPage>
-      <IonHeader translucent={true}>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonButton color="medium" onClick={() => onDismiss(null, 'cancel')}>
-              Cancel
-            </IonButton>
-          </IonButtons>
-          <IonTitle>Sketch</IonTitle>
-          <IonButtons slot="end">
-            <IonButton onClick={() => onDismiss(inputRef.current?.value, 'done')} strong={true}>
-              Done
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-
-      </IonContent>
-    </IonPage>
-  );
-};
-
 export default function Home() {
+  const [handlerMessage, setHandlerMessage] = React.useState('');
+  const [roleMessage, setRoleMessage] = React.useState('');
+  const [sketchName, setSketchName] = React.useState('');
   const [sketches, setSketches] = React.useState<{ id: number; name: string; date: string; image: string }[]>([]);
   const [formattedDateTime, setFormattedDateTime] = React.useState('');
 
@@ -59,11 +37,17 @@ export default function Home() {
     setSketches(savedSketches);
   }, []);
 
+  const handleCreateSketch = (inputs: { SketchName: string }) => {
+    console.log('Created New Sketch: ' + inputs.SketchName);
+    setSketchName(inputs.SketchName);
+    createNewSketch();
+  };
+
   const createNewSketch = () => {
     // Generate a new sketch object with a unique ID and other properties
     const newSketch = {
       id: Date.now(),
-      name: 'HandSketch: New Sketch',
+      name: sketchName,
       date: formattedDateTime,
       image: 'https://ionicframework.com/docs/img/demos/card-media.png',
     };
@@ -79,7 +63,7 @@ export default function Home() {
 
     // Return Excalidraw Component in a Modal
 
-    return <ExcalidrawModal />;
+    return <HandSketch />;
 
   };
 
@@ -88,6 +72,16 @@ export default function Home() {
       <IonHeader translucent={true}>
         <IonToolbar>
           <IonTitle>HandSketch</IonTitle>
+          <IonButtons slot="primary">
+            <IonButton>
+              <IonIcon slot="icon-only" ios={cog} md={settings}></IonIcon>
+            </IonButton>
+          </IonButtons>
+          <IonButtons slot="secondary">
+            <IonButton>
+              <IonIcon slot="icon-only" icon={search}></IonIcon>
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen={true}>
@@ -96,7 +90,6 @@ export default function Home() {
             <IonTitle size="large">HandSketch</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <p>{formattedDateTime}</p>
         {/* Grid of cards */}
         <div className="grid grid-cols-4 gap-4 p-4">
           {sketches.map((sketch) => (
@@ -104,11 +97,12 @@ export default function Home() {
               <IonCard>
                 <img alt="Sketch Preview" src={sketch.image} />
                 <IonCardHeader>
-                  <IonChip color="primary">{sketch.date}</IonChip>
+                  {/* <IonChip color="primary">{sketch.date}</IonChip> */}
                   <IonCardTitle>{sketch.name}</IonCardTitle>
                   <IonCardSubtitle>Sketch</IonCardSubtitle>
+                  <IonCardSubtitle>Modified On: {sketch.date}</IonCardSubtitle>
+                  <IonButton fill="solid">Open</IonButton>
                 </IonCardHeader>
-                <IonCardContent>Modified On: {formattedDateTime}</IonCardContent>
               </IonCard>
             </div>
           ))}
@@ -116,10 +110,40 @@ export default function Home() {
 
         {/* FAB */}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton translucent={true} routerLink="/sketch" onClick={createNewSketch}>
+          <IonFabButton translucent={true} id="name-alert">
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>
+
+        {/* Alert */}
+        <IonAlert
+          header="Create New Sketch"
+          trigger="name-alert"
+          translucent={true}
+          inputs={[
+            {
+              name: 'SketchName',
+              placeholder: 'Name of your Sketch (Max. 20 Characters)',
+              attributes: {
+                maxlength: 20,
+              },
+            },
+          ]}
+          buttons={[
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                setHandlerMessage('Cancel Creating New Sketch');
+              },
+            },
+            {
+              text: 'Create',
+              role: 'confirm',
+              handler: handleCreateSketch,
+            },
+          ]}
+        ></IonAlert>
       </IonContent>
     </IonPage>
   );
